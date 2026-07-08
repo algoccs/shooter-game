@@ -63,19 +63,33 @@ class Player(GameSprite):
 
 class Enemy(GameSprite):
     def update(self):
+        global fallos
+
         self.rect.y += self.speed
 
-        if self.rect.y >= ALTO:
+        if self.rect.y >= ALTO:  # Cruza el limite inferior
             self.rect.y = -40
             self.speed = randint(1, 5)
             self.rect.x = randint(0, ANCHO - 50)
+
+            fallos += 1
+
+
+class Bullet(GameSprite):
+    pass
 
 
 # ==============================================================================
 # INSTANCIACION DE OBJETOS
 # ==============================================================================
 player = Player(PLAYER_IMG, ANCHO // 2, ALTO - 100, 60, 60, 5)
-enemy = Enemy(ENEMY_IMG, randint(0, ANCHO - 50), -40, 50, 40, randint(1, 5))
+enemies = sprite.Group()  # SET (CONJUNTO) #add
+
+for i in range(5):
+    enemy = Enemy(ENEMY_IMG, randint(0, ANCHO - 50), -
+                  40, 50, 40, randint(1, 5))
+    enemies.add(enemy)
+
 
 # ==============================================================================
 # CICLO PRINCIPAL DEL JUEGO (GAME LOOP)
@@ -89,15 +103,17 @@ while run:
     screen.blit(background, (0, 0))
     # --- LOGICA Y ACTUALIZACIÓN DE POSICIONES ---
     player.update()  # Primero se calcula la nueva posición del jugador
-    enemy.update()
+    enemies.update()
 
     # --- RENDERIZADO (DIBUJO EN PANTALLA) ---
     player.reset()     # Dibuja al jugador en la nueva posición
-    enemy.reset()     # Dibuja al jugador en la nueva posición
+    enemies.draw(screen)     # Dibuja al jugador en la nueva posición
 
     # --- ACTUALIZACION DE LA VENTANA ---
     display.update()
     clock.tick(FPS)
+
+    # print(fallos)
 
 # FINALIZACION DE PYGAME
 quit()

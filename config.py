@@ -21,9 +21,9 @@ BACKGROUND_IMG = 'src/background.jpg'
 # (Puedes agregar tus pistas de audio aquí más adelante)
 
 # --- PARAMETROS INICIALES DE PARTIDA ---
-VIDAS = 5
-FALLOS = 0
-PUNTOS = 0
+vidas = 5
+fallos = 0
+puntos = 0
 FPS = 60
 
 # --- BANDERAS DE ESTADO (CONTROL DEL JUEGO) ---
