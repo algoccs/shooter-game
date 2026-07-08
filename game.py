@@ -56,11 +56,11 @@ class Player(GameSprite):
             self.rect.x += self.speed
 
     def shoot(self):
-        print('Pew Pew!')
+        bala = Bullet(BULLET_IMG, self.rect.x + 25, self.rect.y, 10, 15, 5)
+        bullets.add(bala)
+
 
 # Clase para los enemigos (Meteoros/Naves enemigas)
-
-
 class Enemy(GameSprite):
     def update(self):
         global fallos
@@ -76,7 +76,8 @@ class Enemy(GameSprite):
 
 
 class Bullet(GameSprite):
-    pass
+    def update(self):
+        self.rect.y -= self.speed
 
 
 # ==============================================================================
@@ -84,6 +85,7 @@ class Bullet(GameSprite):
 # ==============================================================================
 player = Player(PLAYER_IMG, ANCHO // 2, ALTO - 100, 60, 60, 5)
 enemies = sprite.Group()  # SET (CONJUNTO) #add
+bullets = sprite.Group()  # SET (CONJUNTO) #add
 
 for i in range(5):
     enemy = Enemy(ENEMY_IMG, randint(0, ANCHO - 50), -
@@ -100,14 +102,20 @@ while run:
         if e.type == QUIT:
             run = False
 
+        if e.type == KEYDOWN:
+            if e.key == K_SPACE:
+                player.shoot()
+
     screen.blit(background, (0, 0))
     # --- LOGICA Y ACTUALIZACIÓN DE POSICIONES ---
     player.update()  # Primero se calcula la nueva posición del jugador
-    enemies.update()
+    enemies.update()  # Recalcular la posicion de cada enemigo en el grupo de sprites
+    bullets.update()
 
     # --- RENDERIZADO (DIBUJO EN PANTALLA) ---
-    player.reset()     # Dibuja al jugador en la nueva posición
-    enemies.draw(screen)     # Dibuja al jugador en la nueva posición
+    player.reset()  # Dibuja al jugador en la nueva posición
+    enemies.draw(screen)  # Dibuja al grupo de sprites
+    bullets.draw(screen)
 
     # --- ACTUALIZACION DE LA VENTANA ---
     display.update()

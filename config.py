@@ -16,6 +16,7 @@ BACK = (136, 3, 252)
 PLAYER_IMG = 'src/ship.png'
 ENEMY_IMG = 'src/enemy.png'
 BACKGROUND_IMG = 'src/background.jpg'
+BULLET_IMG = PLAYER_IMG  # Buscar una imagen para las balas
 
 # --- RUTAS DE RECURSOS (SONIDOS) ---
 # (Puedes agregar tus pistas de audio aquí más adelante)
