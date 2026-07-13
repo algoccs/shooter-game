@@ -7,8 +7,8 @@ from random import randint
 
 # Inicialización de los módulos de Pygame
 init()
-font.init()
-mixer.init()
+font.init() # texto
+mixer.init() # musica
 
 # ==============================================================================
 # CONFIGURACION DE LA PANTALLA Y RELOJ
@@ -19,7 +19,11 @@ clock = time.Clock()
 
 # TEXTO Y FUENTES
 font_1 = font.Font(FONT_FILE, 30)
+font_2 = font.Font(FONT_FILE, 40)
 
+# MUSICA
+mixer.music.load(BGM)
+mixer.music.play()
 
 # Fondo
 background = transform.scale(image.load(BACKGROUND_IMG), (ANCHO, ALTO))
@@ -111,16 +115,22 @@ while run:
         if e.type == KEYDOWN:
             if e.key == K_SPACE:
                 player.shoot()
+            if e.key == K_r:
+                finish = False
+                puntos = 0
+                fallos = 0
+                vidas = 5
 
     points_text = font_1.render(f'PUNTOS: {puntos}', 1, WHITE)
     misses_text = font_1.render(f'FALLOS: {fallos}', 1, WHITE)
-
+    lives_text = font_2.render(f'VIDAS: {vidas}', 1, GREEN)
 
     if not finish:
         screen.blit(background, (0, 0))
         # renderizar la fuente
         screen.blit(points_text, (20, 20))
         screen.blit(misses_text, (20, 60))
+        screen.blit(lives_text, (460, 20))
 
         # --- LOGICA Y ACTUALIZACIÓN DE POSICIONES ---
         player.update()  # Primero se calcula la nueva posición del jugador
@@ -140,8 +150,15 @@ while run:
                         40, 50, 40, randint(1, 5))
             enemies.add(enemy)
 
+        if sprite.spritecollide(player, enemies, True):
+            vidas -= 1
+            enemy = Enemy(ENEMY_IMG, randint(0, ANCHO - 50), -
+                        40, 50, 40, randint(1, 5))
+            enemies.add(enemy)
+
+
         # Condicion de derrota:
-        if fallos == 10:
+        if fallos == 10 or vidas == 0:
             finish = True
             screen.fill(BLACK)
             # RENDERIZAR NUESTRA PANTALLA DE DERROTA
