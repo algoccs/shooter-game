@@ -11,6 +11,7 @@ TITULO = 'Proyecto Shooter'
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 BACK = (136, 3, 252)
+GREEN = (32, 210, 52)
 
 # --- RUTAS DE RECURSOS (IMAGENES) ---
 PLAYER_IMG = 'src/ship.png'
@@ -22,6 +23,10 @@ VICTORY_IMG = 'src/victory.jpg'
 
 # ARCHIVOS DE FUENTES
 FONT_FILE = 'src/font_1.ttf'
+
+# ARCHIV>OS DE MUSICA
+BGM = 'src/background.mp3'
+FIRE_SOUND = 'src/laser.mp3'
 
 # --- RUTAS DE RECURSOS (SONIDOS) ---
 # (Puedes agregar tus pistas de audio aquí más adelante)

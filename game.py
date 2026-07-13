@@ -23,7 +23,10 @@ font_2 = font.Font(FONT_FILE, 40)
 
 # MUSICA
 mixer.music.load(BGM)
-mixer.music.play()
+mixer.music.play() # .stop() .pause()
+
+fire_fx = mixer.Sound(FIRE_SOUND)
+
 
 # Fondo
 background = transform.scale(image.load(BACKGROUND_IMG), (ANCHO, ALTO))
@@ -68,6 +71,7 @@ class Player(GameSprite):
     def shoot(self):
         bala = Bullet(BULLET_IMG, self.rect.x + 25, self.rect.y, 10, 15, 5)
         bullets.add(bala)
+        fire_fx.play()
 
 
 # Clase para los enemigos (Meteoros/Naves enemigas)
