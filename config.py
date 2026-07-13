@@ -18,6 +18,9 @@ ENEMY_IMG = 'src/enemy.png'
 BACKGROUND_IMG = 'src/background.jpg'
 BULLET_IMG = PLAYER_IMG  # Buscar una imagen para las balas
 
+# ARCHIVOS DE FUENTES
+FONT_FILE = 'src/font_1.ttf'
+
 # --- RUTAS DE RECURSOS (SONIDOS) ---
 # (Puedes agregar tus pistas de audio aquí más adelante)
 

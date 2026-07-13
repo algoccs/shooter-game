@@ -7,6 +7,8 @@ from random import randint
 
 # Inicialización de los módulos de Pygame
 init()
+font.init()
+mixer.init()
 
 # ==============================================================================
 # CONFIGURACION DE LA PANTALLA Y RELOJ
@@ -14,6 +16,10 @@ init()
 screen = display.set_mode((ANCHO, ALTO))
 display.set_caption(TITULO)
 clock = time.Clock()
+
+# TEXTO Y FUENTES
+font_1 = font.Font(FONT_FILE, 30)
+
 
 # Fondo
 background = transform.scale(image.load(BACKGROUND_IMG), (ANCHO, ALTO))
@@ -106,22 +112,35 @@ while run:
             if e.key == K_SPACE:
                 player.shoot()
 
-    screen.blit(background, (0, 0))
-    # --- LOGICA Y ACTUALIZACIÓN DE POSICIONES ---
-    player.update()  # Primero se calcula la nueva posición del jugador
-    enemies.update()  # Recalcular la posicion de cada enemigo en el grupo de sprites
-    bullets.update()
+    points_text = font_1.render(f'PUNTOS: {puntos}', 1, WHITE)
+    misses_text = font_1.render(f'FALLOS: {fallos}', 1, WHITE)
 
-    # --- RENDERIZADO (DIBUJO EN PANTALLA) ---
-    player.reset()  # Dibuja al jugador en la nueva posición
-    enemies.draw(screen)  # Dibuja al grupo de sprites
-    bullets.draw(screen)
+
+    if not finish:
+        screen.blit(background, (0, 0))
+        # renderizar la fuente
+        screen.blit(points_text, (20, 20))
+        screen.blit(misses_text, (20, 60))
+
+        # --- LOGICA Y ACTUALIZACIÓN DE POSICIONES ---
+        player.update()  # Primero se calcula la nueva posición del jugador
+        enemies.update()  # Recalcular la posicion de cada enemigo en el grupo de sprites
+        bullets.update()
+
+        # --- RENDERIZADO (DIBUJO EN PANTALLA) ---
+        player.reset()  # Dibuja al jugador en la nueva posición
+        enemies.draw(screen)  # Dibuja al grupo de sprites
+        bullets.draw(screen)
+
+        if fallos == 10:
+            finish = True
+            screen.fill(BLACK)
+            # RENDERIZAR NUESTRA PANTALLA DE DERROTA
 
     # --- ACTUALIZACION DE LA VENTANA ---
     display.update()
     clock.tick(FPS)
 
-    # print(fallos)
 
 # FINALIZACION DE PYGAME
 quit()
