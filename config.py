@@ -17,6 +17,8 @@ PLAYER_IMG = 'src/ship.png'
 ENEMY_IMG = 'src/enemy.png'
 BACKGROUND_IMG = 'src/background.jpg'
 BULLET_IMG = PLAYER_IMG  # Buscar una imagen para las balas
+DEFEAT_IMG = 'src/defeat.jpg'
+VICTORY_IMG = 'src/victory.jpg'
 
 # ARCHIVOS DE FUENTES
 FONT_FILE = 'src/font_1.ttf'

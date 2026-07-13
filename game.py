@@ -132,10 +132,30 @@ while run:
         enemies.draw(screen)  # Dibuja al grupo de sprites
         bullets.draw(screen)
 
+
+        collision = sprite.groupcollide(enemies, bullets, True, True)
+        for c in collision:
+            puntos += 1
+            enemy = Enemy(ENEMY_IMG, randint(0, ANCHO - 50), -
+                        40, 50, 40, randint(1, 5))
+            enemies.add(enemy)
+
+        # Condicion de derrota:
         if fallos == 10:
             finish = True
             screen.fill(BLACK)
             # RENDERIZAR NUESTRA PANTALLA DE DERROTA
+            gameover_img = transform.scale(image.load(DEFEAT_IMG), (ANCHO, ALTO))
+            screen.blit(gameover_img, (0, 0))
+        
+        # Condicion de victoria:
+        if puntos == 30:
+            finish = True
+            screen.fill(BLACK)
+            # RENDERIZAR NUESTRA PANTALLA DE VICTORIA
+            victory_img = transform.scale(image.load(VICTORY_IMG), (ANCHO, ALTO))
+            screen.blit(victory_img, (0, 0))
+
 
     # --- ACTUALIZACION DE LA VENTANA ---
     display.update()
