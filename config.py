@@ -36,8 +36,10 @@ FIRE_SOUND = 'src/laser.mp3'
 vidas = 5
 fallos = 0
 puntos = 0
+balas_disparadas = 0
 FPS = 60
 
 # --- BANDERAS DE ESTADO (CONTROL DEL JUEGO) ---
 run = True
 finish = False
+reloading = False

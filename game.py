@@ -4,6 +4,7 @@
 from pygame import *
 from config import *
 from random import randint
+from time import time as timer
 
 # Inicialización de los módulos de Pygame
 init()
@@ -132,12 +133,20 @@ while run:
 
         if e.type == KEYDOWN:
             if e.key == K_SPACE:
-                player.shoot()
+                if balas_disparadas < 6 and reloading == False:
+                    player.shoot()
+                    balas_disparadas += 1
+                
+                if balas_disparadas >= 6 and reloading == False:
+                    reloading = True
+                    reload_time = timer()
+
             if e.key == K_r:
                 finish = False
                 puntos = 0
                 fallos = 0
                 vidas = 5
+
 
     points_text = font_1.render(f'PUNTOS: {puntos}', 1, WHITE)
     misses_text = font_1.render(f'FALLOS: {fallos}', 1, WHITE)
@@ -162,6 +171,15 @@ while run:
         bullets.draw(screen)
         asteroids.draw(screen)
 
+        if reloading:
+            actual_time = timer()
+            if actual_time - reload_time <= 1.5:
+                reload_text = font_1.render('Reloading...', 1, (220, 230, 20))
+                screen.blit(reload_text, ((ANCHO - 100) // 2, ALTO // 2 ))
+            else:
+                reloading = False
+                balas_disparadas = 0
+
 
         collision = sprite.groupcollide(enemies, bullets, True, True)
         for c in collision:
@@ -178,7 +196,7 @@ while run:
 
 
         # Condicion de derrota:
-        if fallos == 10 or vidas == 0:
+        if fallos == 10 or vidas == 0 or sprite.spritecollide(player, asteroids, False):
             finish = True
             screen.fill(BLACK)
             # RENDERIZAR NUESTRA PANTALLA DE DERROTA
