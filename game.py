@@ -88,11 +88,19 @@ class Enemy(GameSprite):
 
             fallos += 1
 
+class Asteroid(GameSprite):
+    def update(self):
+        self.rect.y += self.speed
+        self.rect.x += 1
+
+        if self.rect.y >= ALTO:
+            self.rect.y = -40
+            self.speed = randint(1, 5)
+            self.rect.x = randint(0, ANCHO - 50)
 
 class Bullet(GameSprite):
     def update(self):
         self.rect.y -= self.speed
-
 
 # ==============================================================================
 # INSTANCIACION DE OBJETOS
@@ -100,11 +108,17 @@ class Bullet(GameSprite):
 player = Player(PLAYER_IMG, ANCHO // 2, ALTO - 100, 60, 60, 5)
 enemies = sprite.Group()  # SET (CONJUNTO) #add
 bullets = sprite.Group()  # SET (CONJUNTO) #add
+asteroids = sprite.Group()  # SET (CONJUNTO) #add
 
 for i in range(5):
     enemy = Enemy(ENEMY_IMG, randint(0, ANCHO - 50), -
                   40, 50, 40, randint(1, 5))
     enemies.add(enemy)
+
+for i in range(3):
+    rock = Asteroid(ROCK_IMG, randint(0, ANCHO - 50), -
+                  40, 70, 70, randint(1, 5))
+    asteroids.add(rock)
 
 
 # ==============================================================================
@@ -140,11 +154,13 @@ while run:
         player.update()  # Primero se calcula la nueva posición del jugador
         enemies.update()  # Recalcular la posicion de cada enemigo en el grupo de sprites
         bullets.update()
+        asteroids.update()
 
         # --- RENDERIZADO (DIBUJO EN PANTALLA) ---
         player.reset()  # Dibuja al jugador en la nueva posición
         enemies.draw(screen)  # Dibuja al grupo de sprites
         bullets.draw(screen)
+        asteroids.draw(screen)
 
 
         collision = sprite.groupcollide(enemies, bullets, True, True)

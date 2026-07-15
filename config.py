@@ -16,6 +16,7 @@ GREEN = (32, 210, 52)
 # --- RUTAS DE RECURSOS (IMAGENES) ---
 PLAYER_IMG = 'src/ship.png'
 ENEMY_IMG = 'src/enemy.png'
+ROCK_IMG = 'src/rock.png'
 BACKGROUND_IMG = 'src/background.jpg'
 BULLET_IMG = PLAYER_IMG  # Buscar una imagen para las balas
 DEFEAT_IMG = 'src/defeat.jpg'
